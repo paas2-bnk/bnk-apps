@@ -1,29 +1,25 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: helm-accounts
+  name: helm-transfers
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  
+  destination:
+    namespace: banking
+    server: {{ .Values.spec.destination.server }}
   project: banking    
-
   source:
     helm:
       version: v3
       valueFiles:
-      - values-{{ .Values.env }}.yaml
+      - values-sit.yaml
     path: ./
-    repoURL: https://github.com/paas2-bnk/accounts.api.helm
+    repoURL: https://github.com/paas2-bnk/transfers.api.helm
     targetRevision: HEAD
-
-  destination:
-    namespace: banking
-    server: {{ .Values.spec.destination.server }}
-    
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true  
+    - CreateNamespace=true     
     automated:  
-      prune: true   
+      prune: true       
