@@ -14,7 +14,7 @@ spec:
     helm:
       version: v3
       valueFiles:
-      - values-sit.yaml
+      - values-{{ .Values.env }}.yaml
     path: ./
     repoURL: https://github.com/paas2-bnk/limits.api.helm
     targetRevision: HEAD
